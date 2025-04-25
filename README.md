@@ -1,2 +1,1 @@
-# Fluent-MVC-calculator
-A basic CLI calculator project that uses two fitting design patterns
+A basic CLI calculator project that uses two fitting design patterns. The scope of this project is not to create a complex application but to correctly incorporate two design patterns into a project that fit it's purpose.
