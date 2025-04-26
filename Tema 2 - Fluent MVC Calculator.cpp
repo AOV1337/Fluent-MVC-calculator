@@ -1,4 +1,7 @@
 #include <iostream>
+#include <sstream>
+#include <string>
+
 using namespace std;
 
 class CalculatorModel {
@@ -58,17 +61,58 @@ public:
     static void displayResult(double result) {
         cout << "Result: " << result << endl;
     }
+
+    static void showWelcome() {
+        cout << "Simple CLI Calculator (type 'exit' to quit)\n";
+        cout << "Commands: add x, subtract x, multiply x, divide x, result, reset\n";
+    }
+
+    static void showInvalidCommand() {
+        cout << "Invalid command. Try again.\n";
+    }
 };
 
 int main() {
     CalculatorController calc;
+    string input;
 
-    //Dummy operations, no user input yet. Will add that later on
-    calc.Add(10).Multiply(3).Subtract(5).Divide(2);
-    CalculatorView::displayResult(calc.Result());
+    CalculatorView::showWelcome();
 
-    calc.Reset().Add(100).Divide(4);
-    CalculatorView::displayResult(calc.Result());
+    while (true) {
+        cout << "> ";
+        getline(cin, input);
+
+        istringstream iss(input);
+        string command;
+        double value;
+
+        iss >> command;
+
+        if (command == "exit") {
+            break;
+        }
+        else if (command == "add" && iss >> value) {
+            calc.Add(value);
+        }
+        else if (command == "subtract" && iss >> value) {
+            calc.Subtract(value);
+        }
+        else if (command == "multiply" && iss >> value) {
+            calc.Multiply(value);
+        }
+        else if (command == "divide" && iss >> value) {
+            calc.Divide(value);
+        }
+        else if (command == "result") {
+            CalculatorView::displayResult(calc.Result());
+        }
+        else if (command == "reset") {
+            calc.Reset();
+        }
+        else {
+            CalculatorView::showInvalidCommand();
+        }
+    }
 
     return 0;
 }
